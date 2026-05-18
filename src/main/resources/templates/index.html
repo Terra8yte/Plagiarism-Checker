@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Universal Plagiarism Checker</title>
+
+    <style>
+
+        body{
+            font-family:Arial, sans-serif;
+            background:#f4f6f9;
+            margin:0;
+            padding:0;
+        }
+
+        .container{
+
+            width:80%;
+            max-width:900px;
+
+            margin:40px auto;
+
+            background:white;
+
+            padding:30px;
+
+            border-radius:12px;
+
+            box-shadow:0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h1{
+            text-align:center;
+            color:#333;
+        }
+
+        textarea,
+        select,
+        input[type="file"]{
+
+            width:100%;
+
+            padding:12px;
+
+            margin-top:10px;
+            margin-bottom:20px;
+
+            border-radius:8px;
+
+            border:1px solid #ccc;
+
+            font-size:16px;
+        }
+
+        textarea{
+            height:180px;
+            resize:none;
+        }
+
+        button{
+
+            width:100%;
+
+            padding:15px;
+
+            border:none;
+
+            background:#4CAF50;
+
+            color:white;
+
+            font-size:18px;
+
+            border-radius:8px;
+
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#45a049;
+        }
+
+        h3{
+            color:#444;
+        }
+
+        .section{
+            margin-top:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Universal Plagiarism Checker</h1>
+
+    <form method="post"
+          action="/check"
+          enctype="multipart/form-data">
+
+        <!-- MODE -->
+
+        <h3>Select Mode</h3>
+
+        <select id="mode"
+                name="mode"
+                onchange="changeMode()">
+
+            <option value="text">
+                Compare Text
+            </option>
+
+            <option value="file">
+                Compare Files
+            </option>
+
+            <option value="web">
+                Search Web
+            </option>
+
+        </select>
+
+        <!-- TEXT MODE -->
+
+        <div id="textMode"
+             class="section">
+
+            <h3>Text 1</h3>
+
+            <textarea name="text1"
+            placeholder="Enter first text"></textarea>
+
+            <h3>Text 2</h3>
+
+            <textarea name="text2"
+            placeholder="Enter second text"></textarea>
+
+        </div>
+
+        <!-- FILE MODE -->
+
+        <div id="fileMode"
+             class="section"
+             style="display:none;">
+
+            <h3>Upload File 1</h3>
+
+            <input type="file"
+                   name="file1">
+
+            <h3>Upload File 2</h3>
+
+            <input type="file"
+                   name="file2">
+
+        </div>
+
+        <!-- WEB MODE -->
+
+        <div id="webMode"
+             class="section"
+             style="display:none;">
+
+            <h3>Search Type</h3>
+
+            <select id="webType"
+                    onchange="changeWebType()">
+
+                <option value="text">
+                    Text Search
+                </option>
+
+                <option value="file">
+                    File / PDF / DOCX
+                </option>
+
+            </select>
+
+            <!-- WEB TEXT -->
+
+            <div id="webTextSection">
+
+                <textarea name="webText"
+                placeholder="Enter text for web search"></textarea>
+
+            </div>
+
+            <!-- WEB FILE -->
+
+            <div id="webFileSection"
+                 style="display:none;">
+
+                <input type="file"
+                    name="webFile">
+
+            </div>
+
+        </div>
+
+        <!-- BUTTON -->
+
+        <button type="submit">
+
+            Check Similarity
+
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function changeMode(){
+
+    let mode =
+        document.getElementById(
+            "mode").value;
+
+    document.getElementById(
+        "textMode").style.display =
+        "none";
+
+    document.getElementById(
+        "fileMode").style.display =
+        "none";
+
+    document.getElementById(
+        "webMode").style.display =
+        "none";
+
+    if(mode === "text"){
+
+        document.getElementById(
+            "textMode").style.display =
+            "block";
+    }
+
+    if(mode === "file"){
+
+        document.getElementById(
+            "fileMode").style.display =
+            "block";
+    }
+
+    if(mode === "web"){
+
+        document.getElementById(
+            "webMode").style.display =
+            "block";
+
+        changeWebType();
+    }
+}
+
+function changeWebType(){
+
+    let type =
+        document.getElementById(
+            "webType").value;
+
+    document.getElementById(
+        "webTextSection").style.display =
+        "none";
+
+    document.getElementById(
+        "webFileSection").style.display =
+        "none";
+
+    if(type === "text"){
+
+        document.getElementById(
+            "webTextSection").style.display =
+            "block";
+    }
+
+    if(type === "file"){
+
+        document.getElementById(
+            "webFileSection").style.display =
+            "block";
+    }
+}
+
+</script>
+
+</body>
+</html>
